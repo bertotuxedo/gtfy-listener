@@ -2,7 +2,7 @@
 
 [![docker-image](https://github.com/sanwebinfo/gtfy-listener/actions/workflows/docker.yml/badge.svg)](https://github.com/sanwebinfo/gtfy-listener/actions/workflows/docker.yml)  
 
-Gotify to `Ntfy.sh` forwarder
+Gotify to `Ntfy.sh` forwarder. This includes a few corrections and focuses on a http connection on a homeserver. This works from my Proxmox Server to Gotify to NTFY.
 
 Forward Gotify Push Messages 🚀 to `Ntfy.sh` Push server by using websocket 🛸
 
@@ -23,8 +23,8 @@ touch .env
 - Env File `.env`
 
 ```sh
-NTFY = "<NTFY Push server URL>"
-GOTIFY_HOST = "<Python Cricket score API>"
+NTFY = "<NTFY Push server URL without HTTP(S)>" 
+GOTIFY_HOST = "<http://Gotify host URL:Port/secrettopic>"
 GOTIFY_TOKEN = "<GOTIFY CLIENT TOKEN>"
 
 ## test
