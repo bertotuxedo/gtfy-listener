@@ -11,7 +11,7 @@ using Gotify stream to Listen the Gotify Push Notifications via websocket Connec
 ## Setup
 
 ```sh
-git clone https://github.com/sanwebinfo/gtfy-listener
+git clone https://github.com/bertotuxedo/gtfy-listener
 cd gtfy-listener
 
 ## local test
@@ -39,17 +39,27 @@ Keep Running the Python Script in Docker
 - Update the `.dockerfile` before build - Replace example `ENV` with yours  
 
 ```sh
+# Remove anything after octothorpe in entire script
+# This is my current working configuration for HTTP to HTTP on a home server
 FROM python:3.8.10
 ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 RUN pip3 install requests python-dotenv websocket-client
-ENV GOTIFY_HOST=push.example.com
-ENV GOTIFY_TOKEN=XXXXXXXXXXXX
-ENV NTFY_HOST=https://ntfy.sh/gotify
+ENV GOTIFY_HOST=XXX.XXX.XXX.XXX:XXXX    # URL of Gotify without leading HTTP
+ENV GOTIFY_TOKEN="TOKENINQUOTES"   # Client Token from Gotify App
+ENV NTFY_HOST=http://XXX.XXX.XXX.XXX:XXXX/secrettopic #URL of NTFY WITH leading HTTP and your secret topic at end
 COPY gtfy.py /usr/bin
 CMD ["python3", "/usr/bin/gtfy.py"]
 ```
 
+- Run docker compose
+
+```sh
+## Start docker
+docker compose up -d
+```
+
+- Other docker Commands
 ```sh
 
 ## Build image
