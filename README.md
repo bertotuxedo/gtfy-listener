@@ -43,7 +43,7 @@ Keep Running the Python Script in Docker
 - Update the `.dockerfile` before build - Replace example `ENV` with yours
 
 ```sh
- nano Dockerfile
+nano Dockerfile
 ```
 
 ```sh
@@ -76,7 +76,6 @@ CMD ["python3", "/usr/bin/gtfy.py"]
 - Build Docker Image
 
 ```sh
-## Build image
 docker build . -t="gtfy2ntfy"
 ```
 - List the image
@@ -86,13 +85,13 @@ docker image ls
 - Create and Test Container
 ```sh
 docker run -d --name gtfy2ntfy gtfy2ntfy
-docker container ps
-docker stop (containerID)
+docker ps
+docker stop gtfy2ntfy
 ```
 
 ## Run the container forever (PREFERRED)
 ```sh
-docker run -d --restart=always --name gtfy gtfy-listener
+docker run -d --restart=always --name gtfy2ntfy gtfy2ntfy
 ```
 
 - Other Commands in Docker
@@ -115,6 +114,10 @@ docker rmi $(docker image ls -q)
 ## Inspiration
 
 Pushtify (Gotify to Pushover forwarder) - <https://github.com/sebw/pushtify>
+NTFY - <https://docs.ntfy.sh/install/>
+Gotify and iGotify - <https://github.com/androidseb25/iGotify-Notification-Assistent/tree/main>
+Gotify-listener - <https://github.com/sanwebinfo/gtfy-listener>
+
 
 ## LICENSE
 
