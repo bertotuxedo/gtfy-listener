@@ -11,32 +11,40 @@ using Gotify stream to Listen the Gotify Push Notifications via websocket Connec
 ## Setup
 
 ```sh
-git clone https://github.com/bertotuxedo/gtfy-listener
-cd gtfy-listener
-
-## local test
-## install packages
-pip install -r requirements.txt
-touch .env
+git clone https://github.com/bertotuxedo/gtfy2ntfy
+cd gtfy2ntfy
 ```
 
 - Env File `.env`
 
 ```sh
+nano .env
+```
+
+```sh
 NTFY = "<NTFY Push server URL without HTTP(S)>" 
 GOTIFY_HOST = "<http://Gotify host URL:Port/secrettopic>"
 GOTIFY_TOKEN = "<GOTIFY CLIENT TOKEN>"
-
-## test
-python3 gtfy.py
-
 ```
+
+Example:
+GOTIFY_HOST="192.168.10.48:8181"
+NTFY_HOST="http://192.168.10.48:8180/mysupersecrettopic"
+GOTIFY_TOKEN="CRpwR023ONqPR9D"
+
+In this example both Gotify and NTFY are running on the same machine with different ports. 
+Retreive Gotify token from the UI under "clients".
+Save the .env with ctrl+O, Y, crtl+X
 
 ## Docker 🐬
 
 Keep Running the Python Script in Docker  
 
-- Update the `.dockerfile` before build - Replace example `ENV` with yours  
+- Update the `.dockerfile` before build - Replace example `ENV` with yours
+
+```sh
+ nano Dockerfile
+```
 
 ```sh
 # Remove anything after octothorpe in entire script
@@ -52,30 +60,43 @@ COPY gtfy.py /usr/bin
 CMD ["python3", "/usr/bin/gtfy.py"]
 ```
 
-- Run docker compose
+Change ENV GOTIFY_HOST=, ENV GOTIFY_TOKEN=, and ENV NTFY_HOST= parameters.
+Example
+
+ENV PYTHONUNBUFFERED 1
+RUN pip install --upgrade pip
+RUN pip3 install requests python-dotenv websocket-client
+ENV GOTIFY_HOST=192.168.10.48:8181
+ENV GOTIFY_TOKEN="CRpwR023ONqPR9D"
+ENV NTFY_HOST=http://192.168.10.48:8180/mysupersecrettopic
+COPY gtfy.py /usr/bin
+CMD ["python3", "/usr/bin/gtfy.py"]
+
+
+- Build Docker Image
 
 ```sh
-## Start docker
-docker compose up -d
-```
-
-- Other docker Commands
-```sh
-
 ## Build image
-docker build . -t="gtfy-listener"
-
-## List the image
+docker build . -t="gtfy2ntfy"
+```
+- List the image
+```sh
 docker image ls
-
-## Create and Test Container
-docker run -d --name gtfy gtfy-listener
+```
+- Create and Test Container
+```sh
+docker run -d --name gtfy2ntfy gtfy2ntfy
 docker container ps
 docker stop (containerID)
+```
 
-## Run the container forever
+## Run the container forever (PREFERRED)
+```sh
 docker run -d --restart=always --name gtfy gtfy-listener
+```
 
+- Other Commands in Docker
+```sh
 ## List Hidden container if error exists
 docker ps -a
 
